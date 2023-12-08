@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -101,8 +102,39 @@ public class MapExercises
     }
 
 
+    public static void question5() throws FileNotFoundException {
+        Map<String, Set<Integer>> index = new HashMap<>();
+        Scanner fin = new Scanner(new File("words.txt"));
+        int lineNumber = 1;
+        while(fin.hasNextLine())
+        {
+            String line = fin.nextLine();
+            String[] words = line.split(" ");
+            for(String s : words)
+            {
+                if(index.containsKey(s))
+                {
+                    index.get(s).add(lineNumber);
+                }
+                else
+                {
+                    Set<Integer> nums = new HashSet<>();
+                    nums.add(lineNumber);
+                    index.put(s, nums);
+                }
+            }
+            lineNumber++;
+        }
+
+        Set<String> keys = index.keySet();
+
+        for(String s: keys)
+        {
+            System.out.println(s + "-> " + index.get(s));
+        }
+    }
 
     public static void main(String[] args) throws IOException {
-        question4();
+        question5();
     }
 }
