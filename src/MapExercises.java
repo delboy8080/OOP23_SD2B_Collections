@@ -1,19 +1,36 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class MapExercises
 {
-    public static void loadPhonebook(Map<String, ContactDetails> book, String filename)
+    public static ContactDetails parseLine(String line)
     {
-
+        String name, home, mob, email;
+        String[] data= line.split(";");
+        name = data[0];
+        home = data[1];
+        mob = data[2];
+        email = data[3];
+        return new ContactDetails(name, home, mob, email);
     }
-    public static void question4()
+    public static void loadPhonebook(Map<String, ContactDetails> book, String filename)
+            throws IOException
     {
+            Scanner fin = new Scanner(new File(filename));
+            while(fin.hasNextLine())
+            {
+                String line = fin.nextLine();
+                ContactDetails cd = parseLine(line);
+                book.put(cd.getName(), cd);
+            }
+    }
+    public static void question4() throws IOException {
         Scanner kb = new Scanner(System.in);
         Map<String, ContactDetails> phoneBook
                 = new HashMap<>();
+        loadPhonebook(phoneBook, "phonebook.txt");
+
         int choice = 0;
         do {
             System.out.println("1. Add entry");
@@ -51,6 +68,32 @@ public class MapExercises
                     }
                 }
                 break;
+                case 3:
+                {
+                    Set<Map.Entry<String, ContactDetails>> entries=
+                            phoneBook.entrySet();
+                    for(Map.Entry<String, ContactDetails> item : entries)
+                    {
+                        System.out.println(item.getKey() + "-> "
+                                + item.getValue());
+                    }
+                }
+                break;
+                case 4:
+                {
+                    System.out.println("Name: ");
+                    String name = kb.nextLine();
+                    if(phoneBook.containsKey(name))
+                    {
+                        phoneBook.remove(name);
+                        System.out.println("Entry removed");
+                    }
+                    else
+                    {
+                        System.out.println("Item does not exist");
+                    }
+                }
+                break;
             }
 
         }while(choice != -1);
@@ -59,8 +102,7 @@ public class MapExercises
 
 
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         question4();
     }
 }

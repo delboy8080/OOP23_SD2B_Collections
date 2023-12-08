@@ -47,4 +47,14 @@ public class ContactDetails
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "ContactDetails{" +
+                "name='" + name + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
