@@ -136,5 +136,6 @@ public class MapExercises
 
     public static void main(String[] args) throws IOException {
         question5();
+        Question6.main();
     }
 }
